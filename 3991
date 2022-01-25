@@ -1,0 +1,58 @@
+import java.util.*;
+import java.io.*;
+
+public class Main{
+    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    public static void main(String[] args) throws IOException {
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int height = Integer.parseInt(st.nextToken());
+        int width = Integer.parseInt(st.nextToken());
+        int color = Integer.parseInt(st.nextToken());
+        int[] beeds = new int[color];
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < color; i++)
+            beeds[i] = Integer.parseInt(st.nextToken());
+
+        int beedsNum = 1;
+		int[][] level = new int[height][width];
+
+		int ptrHeight = 0, ptrWidth = 0;
+		int[] Move = { 1, -1 };
+		int ptrMove = 0;
+
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				level[i][j] = 0;
+			}
+		}
+
+		for (int i = 0; i < color; i++) {
+			for (int j = 0; j < beeds[i]; j++) {
+				if (ptrWidth == width) {
+					ptrWidth -= 1;
+					ptrHeight += 1;
+					ptrMove = 1;
+				}
+				if (ptrWidth == -1) {
+					ptrWidth += 1;
+					ptrHeight += 1;
+					ptrMove = 0;
+				}
+
+				level[ptrHeight][ptrWidth] = beedsNum;
+				ptrWidth += Move[ptrMove];
+
+			}
+			beedsNum++;
+		}
+
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				System.out.print(level[i][j]);
+			}
+			System.out.println();
+		}
+    }
+}
